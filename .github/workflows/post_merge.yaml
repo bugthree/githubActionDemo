@@ -1,0 +1,29 @@
+﻿name: Post Merge Actions
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Set up environment
+        run: echo "Setting up environment after successful merge"
+        
+      # 在这里可以添加你需要执行的操作
+      - name: Run post-merge task
+        run: |
+          echo "PR #${{ github.event.pull_request.number }} was merged!"
+          echo "PR title: ${{ github.event.pull_request.title }}"
+          echo "PR was merged by: ${{ github.actor }}"
+          
+      # 例如，你可以添加部署步骤
+      # - name: Deploy to production
+      #   run: |
+      #     # 部署命令
+      #     echo "Deploying to production..."
